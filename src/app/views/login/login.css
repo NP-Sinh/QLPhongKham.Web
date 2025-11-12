@@ -1,10 +1,9 @@
-/* src/app/pages/login/login.css */
 
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Căn giữa toàn màn hình */
+  min-height: 100vh;
   background-color: #f4f7f6;
 }
 
@@ -39,7 +38,7 @@
   padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 5px;
-  box-sizing: border-box; /* Quan trọng để padding không làm vỡ layout */
+  box-sizing: border-box;
 }
 
 .btn-submit {
@@ -59,7 +58,6 @@
   background-color: #0056b3;
 }
 
-/* Vô hiệu hóa nút khi form invalid */
 .btn-submit:disabled {
   background-color: #a0cffc;
   cursor: not-allowed;
@@ -76,7 +74,6 @@
   text-decoration: none;
 }
 
-/* CSS cho thông báo lỗi */
 .invalid-feedback {
   color: #dc3545;
   font-size: 0.875em;
