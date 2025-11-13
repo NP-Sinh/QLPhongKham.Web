@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { VaiTroModel } from '../../../models/vai-tro-model';
-import { VaiTro } from '../../../services/VaiTroServices/vai-tro';
+import { VaiTroService } from '../../../services/VaiTroServices/vaitro.service';
 
 @Component({
   selector: 'app-vai-tro-list',
@@ -12,7 +12,7 @@ import { VaiTro } from '../../../services/VaiTroServices/vai-tro';
 })
 export class VaiTroList {
   public vaiTros$!: Observable<VaiTroModel[]>;
-  constructor(private vaiTroService: VaiTro) {};
+  constructor(private vaiTroService: VaiTroService) {};
 
   ngOnInit(): void {
     this.loadVaiTros();

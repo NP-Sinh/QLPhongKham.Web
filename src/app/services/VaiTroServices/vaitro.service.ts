@@ -7,7 +7,7 @@ import { VaiTroModel } from '../../models/vai-tro-model';
 @Injectable({
   providedIn: 'root',
 })
-export class VaiTro {
+export class VaiTroService {
   private apiUrl = `${environment.apiUrl}/VaiTro`;
 
   constructor(private http: HttpClient) {}
