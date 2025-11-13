@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { VaiTroList } from './views/vai-tro/vai-tro-list/vai-tro-list';
 import { MainLayout } from './shared/main-layout/main-layout';
 import { Login } from './views/login/login';
+import { BenhNhan } from './views/benh-nhan/benh-nhan';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,11 @@ export const routes: Routes = [
       {
         path: 'vai-tro',
         component: VaiTroList
+      },
+
+      {
+        path: 'benh-nhan',
+        component: BenhNhan
       },
 
 
