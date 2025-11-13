@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { VaiTroModel } from '../../../models/vai-tro-model';
+import { VaiTroModel } from '../../../models/vaitro.model';
 import { VaiTroService } from '../../../services/VaiTroServices/vaitro.service';
 
 @Component({
