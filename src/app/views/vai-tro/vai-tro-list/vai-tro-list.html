@@ -2,65 +2,54 @@
 
   <app-loading-overlay [isLoading]="state.loading"></app-loading-overlay>
 
-  <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>Danh sách Vai Trò</h2>
-      <button class="btn btn-primary" (click)="openAddModal()">
-        <i class="bi bi-plus-circle"></i> Thêm Vai Trò
-      </button>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Danh sách Vai Trò</h2>
+    <button class="btn btn-primary" (click)="openAddModal()">
+      <i class="bi bi-plus-circle"></i> Thêm Vai Trò
+    </button>
+  </div>
+
+  <div *ngIf="state.error" class="alert alert-danger">
+    Đã xảy ra lỗi khi tải danh sách vai trò.
+  </div>
+
+  <div *ngIf="state.data as danhSachVaiTro">
+
+    <div *ngIf="danhSachVaiTro.length > 0; else noData" class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Mã Vai Trò</th>
+            <th scope="col">Tên Vai Trò</th>
+            <th scope="col">Thao Tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vt of danhSachVaiTro">
+            <td>{{ vt.id }}</td>
+            <td>{{ vt.maVaiTro }}</td>
+            <td>{{ vt.tenVaiTro }}</td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="openEditModal(vt.id)">
+                <i class="bi bi-pencil"></i> Sửa
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div *ngIf="state.error" class="alert alert-danger">
-      Đã xảy ra lỗi khi tải danh sách vai trò.
-    </div>
+    <ng-template #noData>
+      <div class="alert alert-info">Không có dữ liệu vai trò nào.</div>
+    </ng-template>
 
-    <div *ngIf="state.data as danhSachVaiTro">
-
-      <div *ngIf="danhSachVaiTro.length > 0; else noData" class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Mã Vai Trò</th>
-              <th scope="col">Tên Vai Trò</th>
-              <th scope="col">Thao Tác</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let vt of danhSachVaiTro">
-              <td>{{ vt.id }}</td>
-              <td>{{ vt.maVaiTro }}</td>
-              <td>{{ vt.tenVaiTro }}</td>
-              <td>
-                <button class="btn btn-sm btn-warning me-2"
-                        (click)="openEditModal(vt.id)">
-                  <i class="bi bi-pencil"></i> Sửa
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <ng-template #noData>
-        <div class="alert alert-info">Không có dữ liệu vai trò nào.</div>
-      </ng-template>
-
-    </div>
   </div>
 
   <!-- Modal -->
-  <app-dynamic-form-modal
-    [isOpen]="isModalOpen"
-    [title]="modalTitle"
-    [fields]="modalFields"
-    [formData]="formData"
-    [isSaving]="isSaving"
-    [errorMessage]="errorMessage"
-    [submitButtonText]="isEditMode ? 'Cập Nhật' : 'Thêm Mới'"
-    (closeModal)="closeModal()"
-    (submitForm)="onSubmit($event)"
-  ></app-dynamic-form-modal>
+  <app-dynamic-form-modal [isOpen]="isModalOpen" [title]="modalTitle" [fields]="modalFields" [formData]="formData"
+    [isSaving]="isSaving" [errorMessage]="errorMessage" [submitButtonText]="isEditMode ? 'Cập Nhật' : 'Thêm Mới'"
+    (closeModal)="closeModal()" (submitForm)="onSubmit($event)"></app-dynamic-form-modal>
 
   <!-- Toast Notification -->
   <app-toast-notification></app-toast-notification>
