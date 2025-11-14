@@ -15,4 +15,7 @@ export class VaiTroService {
   getVaiTros(): Observable<VaiTroModel[]> {
     return this.http.get<VaiTroModel[]>(`${this.apiUrl}/getVaiTro`);
   }
+  getVaiTroId(id : number): Observable<VaiTroModel> {
+    return this.http.get<VaiTroModel>(`${this.apiUrl}/getVaiTroId/${id}`);
+  }
 }
