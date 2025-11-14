@@ -13,7 +13,7 @@ export interface FormField {
 }
 
 @Component({
-  selector: 'app-dynamic-form-modal',
+  selector: 'app-form-modal',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './form-modal.html' ,

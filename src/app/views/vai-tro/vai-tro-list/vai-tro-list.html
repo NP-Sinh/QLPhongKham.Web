@@ -47,9 +47,16 @@
   </div>
 
   <!-- Modal -->
-  <app-dynamic-form-modal [isOpen]="isModalOpen" [title]="modalTitle" [fields]="modalFields" [formData]="formData"
-    [isSaving]="isSaving" [errorMessage]="errorMessage" [submitButtonText]="isEditMode ? 'Cập Nhật' : 'Thêm Mới'"
-    (closeModal)="closeModal()" (submitForm)="onSubmit($event)"></app-dynamic-form-modal>
+  <app-form-modal
+    [isOpen]="isModalOpen"
+    [title]="modalTitle"
+    [fields]="modalFields"
+    [formData]="formData"
+    [isSaving]="isSaving"
+    [errorMessage]="errorMessage"
+    [submitButtonText]="isEditMode ? 'Cập Nhật' : 'Thêm Mới'"
+    (closeModal)="closeModal()" (submitForm)="onSubmit($event)">
+  </app-form-modal>
 
   <!-- Toast Notification -->
   <app-toast-notification></app-toast-notification>
