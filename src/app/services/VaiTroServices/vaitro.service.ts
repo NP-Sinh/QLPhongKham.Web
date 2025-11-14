@@ -18,4 +18,7 @@ export class VaiTroService {
   getVaiTroId(id : number): Observable<VaiTroModel> {
     return this.http.get<VaiTroModel>(`${this.apiUrl}/getVaiTroId/${id}`);
   }
+  modifyVaiTro(vaiTroModel: VaiTroModel): Observable<VaiTroModel> {
+    return this.http.post<VaiTroModel>(`${this.apiUrl}/modify`, vaiTroModel);
+  }
 }
