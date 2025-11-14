@@ -19,7 +19,7 @@
             </label>
 
             <!-- Text/Number/Email Input -->
-            <input *ngIf="field.type !== 'select' && field.type !== 'textarea'" [type]="field.type" class="form-control"
+            <input *ngIf="field.type === 'text' || field.type === 'number' || field.type === 'email' || field.type === 'datetime'" [type]="field.type" class="form-control"
               [id]="field.key" [name]="field.key" [(ngModel)]="formData[field.key]" [required]="field.required ?? false"
               [disabled]="field.disabled || isSaving" [placeholder]="field.placeholder || ''" />
 

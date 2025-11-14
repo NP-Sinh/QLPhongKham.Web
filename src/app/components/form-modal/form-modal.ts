@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 export interface FormField {
   key: string;
   label: string;
-  type: 'text' | 'number' | 'email' | 'select' | 'textarea';
+  type: 'text' | 'number' | 'email' | 'select' | 'textarea' | 'datetime';
   required?: boolean;
   disabled?: boolean;
   options?: { value: any; label: string }[];
