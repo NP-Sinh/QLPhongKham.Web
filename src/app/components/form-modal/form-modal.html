@@ -1,6 +1,6 @@
 <div class="modal fade" [class.show]="isOpen" [style.display]="isOpen ? 'block' : 'none'" tabindex="-1" role="dialog"
   [attr.aria-hidden]="!isOpen" (click)="onBackdropClick()">
-  <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
+  <div class="modal-dialog {{ getModalSizeClass() }}" role="document" (click)="$event.stopPropagation()">
     <div class="modal-content">
 
       <!-- Header -->
@@ -12,35 +12,58 @@
       <!-- Body -->
       <div class="modal-body">
         <form #form="ngForm">
-          <div *ngFor="let field of fields" class="mb-3">
-            <label [for]="field.key" class="form-label">
-              {{ field.label }}
-              <span *ngIf="field.required" class="text-danger">*</span>
-            </label>
+          <div class="row g-3">
+            <div *ngFor="let field of fields" [ngClass]="getColClass(field)">
+              <label [for]="field.key" class="form-label">
+                {{ field.label }}
+                <span *ngIf="field.required" class="text-danger">*</span>
+              </label>
 
-            <!-- Text/Number/Email Input -->
-            <input *ngIf="field.type === 'text' || field.type === 'number' || field.type === 'email' || field.type === 'datetime'" [type]="field.type" class="form-control"
-              [id]="field.key" [name]="field.key" [(ngModel)]="formData[field.key]" [required]="field.required ?? false"
-              [disabled]="field.disabled || isSaving" [placeholder]="field.placeholder || ''" />
+              <!-- Text/Number/Email/Date/Password Input -->
+              <input
+                *ngIf="['text', 'number', 'email', 'datetime', 'date', 'password'].includes(field.type)"
+                [type]="field.type"
+                class="form-control"
+                [id]="field.key"
+                [name]="field.key"
+                [(ngModel)]="formData[field.key]"
+                [required]="field.required ?? false"
+                [disabled]="field.disabled || isSaving"
+                [placeholder]="field.placeholder || ''" />
 
-            <!-- Textarea -->
-            <textarea *ngIf="field.type === 'textarea'" class="form-control" [id]="field.key" [name]="field.key"
-              [(ngModel)]="formData[field.key]" [required]="field.required ?? false"
-              [disabled]="field.disabled || isSaving" [placeholder]="field.placeholder || ''" rows="3"></textarea>
+              <!-- Textarea -->
+              <textarea
+                *ngIf="field.type === 'textarea'"
+                class="form-control"
+                [id]="field.key"
+                [name]="field.key"
+                [(ngModel)]="formData[field.key]"
+                [required]="field.required ?? false"
+                [disabled]="field.disabled || isSaving"
+                [placeholder]="field.placeholder || ''"
+                [rows]="field.rows || 3">
+              </textarea>
 
-            <!-- Select -->
-            <select *ngIf="field.type === 'select'" class="form-select" [id]="field.key" [name]="field.key"
-              [(ngModel)]="formData[field.key]" [required]="field.required ?? false"
-              [disabled]="field.disabled || isSaving">
-              <option value="">-- Chọn {{ field.label }} --</option>
-              <option *ngFor="let opt of field.options" [value]="opt.value">
-                {{ opt.label }}
-              </option>
-            </select>
+              <!-- Select -->
+              <select
+                *ngIf="field.type === 'select'"
+                class="form-select"
+                [id]="field.key"
+                [name]="field.key"
+                [(ngModel)]="formData[field.key]"
+                [required]="field.required ?? false"
+                [disabled]="field.disabled || isSaving">
+                <option value="">-- Chọn {{ field.label }} --</option>
+                <option *ngFor="let opt of field.options" [value]="opt.value">
+                  {{ opt.label }}
+                </option>
+              </select>
+            </div>
           </div>
 
           <!-- Error Message -->
-          <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
             {{ errorMessage }}
           </div>
         </form>
@@ -52,7 +75,6 @@
           Hủy
         </button>
         <button type="button" class="btn btn-primary" (click)="onSubmit(form)" [disabled]="isSaving || form.invalid">
-          <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-2"></span>
           {{ submitButtonText }}
         </button>
       </div>
