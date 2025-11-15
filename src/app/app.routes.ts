@@ -3,37 +3,41 @@ import { VaiTroList } from './views/vai-tro/vai-tro-list/vai-tro-list';
 import { MainLayout } from './shared/main-layout/main-layout';
 import { Login } from './views/login/login';
 import { BenhNhan } from './views/benh-nhan/benh-nhan';
+import { Home } from './views/home/home';
 
 export const routes: Routes = [
-  {
-    path: 'login',
-    component: Login
-  },
+  // {
+  //   path: 'login',
+  //   component: Login,
+  // },
+  // {
+  //   path: '',
+  //   redirectTo: 'login',
+  //   pathMatch: 'full',
+  // },
   {
     path: '',
     component: MainLayout,
     children: [
       {
+        path: 'home',
+        component: Home,
+      },
+      {
         path: 'vai-tro',
-        component: VaiTroList
+        component: VaiTroList,
       },
 
       {
         path: 'benh-nhan',
-        component: BenhNhan
+        component: BenhNhan,
       },
-
 
       {
         path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-      }
-    ]
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+    ],
   },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  }
 ];
