@@ -36,7 +36,9 @@ export class FormModal {
       this.closeModal.emit();
     }
   }
-
+  onBackdropClick() {
+    this.onClose();
+  }
   onSubmit(form: any) {
     if (form.valid && !this.isSaving) {
       this.submitForm.emit({ ...this.formData });

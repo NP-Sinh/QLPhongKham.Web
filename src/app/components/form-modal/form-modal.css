@@ -1,8 +1,11 @@
  .modal.show {
    display: block;
-   background-color: rgba(0, 0, 0, 0.5);
+   z-index: 1050;;
  }
-
+.modal-dialog {
+  position: relative;
+  z-index: 1051;
+}
  .modal-backdrop {
    position: fixed;
    top: 0;

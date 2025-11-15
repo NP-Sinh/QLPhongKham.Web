@@ -85,8 +85,7 @@ export class VaiTroList {
     try {
       return await firstValueFrom(this.vaiTroService.getVaiTroId(id));
     } catch (error) {
-      console.error('Thất bại', error);
-      throw error;
+      return console.error('Thất bại', error);
     }
   }
 
@@ -94,8 +93,7 @@ export class VaiTroList {
     try {
       return await firstValueFrom(this.vaiTroService.modifyVaiTro(payload));
     } catch (error) {
-      console.error('Lưu thất bại', error);
-      throw error;
+      return console.error('Lưu thất bại', error);
     }
   }
 

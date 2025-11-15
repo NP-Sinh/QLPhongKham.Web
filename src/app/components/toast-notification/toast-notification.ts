@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-toast-notification',
@@ -14,11 +14,15 @@ export class ToastNotification {
 
   show = false;
 
+  constructor(private cdr: ChangeDetectorRef){}
+
+
   showToast(message: string, type: 'success' | 'error' | 'warning' = 'success') {
     this.message = message;
     this.type = type;
     this.show = true;
 
+    this.cdr.detectChanges();
     setTimeout(() => {
       this.hide();
     }, this.duration);
@@ -26,5 +30,6 @@ export class ToastNotification {
 
   hide() {
     this.show = false;
+    this.cdr.detectChanges();
   }
 }

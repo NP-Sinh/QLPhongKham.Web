@@ -1,6 +1,6 @@
 <div class="modal fade" [class.show]="isOpen" [style.display]="isOpen ? 'block' : 'none'" tabindex="-1" role="dialog"
-  [attr.aria-hidden]="!isOpen">
-  <div class="modal-dialog" role="document">
+  [attr.aria-hidden]="!isOpen" (click)="onBackdropClick()">
+  <div class="modal-dialog" role="document" (click)="$event.stopPropagation()">
     <div class="modal-content">
 
       <!-- Header -->
@@ -62,5 +62,5 @@
 </div>
 
 <!-- Backdrop -->
-<div class="modal-backdrop fade" [class.show]="isOpen" *ngIf="isOpen" (click)="onClose()">
+<div class="modal-backdrop fade" [class.show]="isOpen" *ngIf="isOpen" (click)="onBackdropClick()">
 </div>
