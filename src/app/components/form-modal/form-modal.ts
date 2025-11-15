@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 export interface FormField {
   key: string;
   label: string;
-  type: 'text' | 'number' | 'email' | 'select' | 'textarea' | 'datetime' | 'password';
+  type: 'text' | 'number' | 'email' | 'select' | 'textarea' | 'datetime' | 'password' | 'file';
   required?: boolean;
   disabled?: boolean;
   options?: { value: any; label: string }[];
   placeholder?: string;
   colspan?: number;
   rows?: number;
+  accept?: string;
+  multiple?: boolean;
 }
 
 @Component({
@@ -35,9 +37,12 @@ export class FormModal {
   @Output() closeModal = new EventEmitter<void>();
   @Output() submitForm = new EventEmitter<any>();
 
+  filePreviews: { [key: string]: any } = {};
+
   onClose() {
     if (!this.isSaving) {
       this.closeModal.emit();
+      this.filePreviews = {};
     }
   }
   onBackdropClick() {
@@ -63,5 +68,52 @@ export class FormModal {
       case 'xl': return 'modal-xl';
       default: return '';
     }
+  }
+  // Xử lý file upload
+  onFileChange(event: any, fieldKey: string) {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      this.formData[fieldKey] = file;
+
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.filePreviews[fieldKey] = {
+            type: 'image',
+            url: e.target.result,
+            name: file.name
+          };
+        };
+        reader.readAsDataURL(file);
+      } else {
+        this.filePreviews[fieldKey] = {
+          type: 'file',
+          name: file.name,
+          size: this.formatFileSize(file.size)
+        };
+      }
+    }
+  }
+   removeFile(fieldKey: string) {
+    this.formData[fieldKey] = null;
+    delete this.filePreviews[fieldKey];
+  }
+  // Format file size
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+  }
+  // Kiểm tra có preview không
+  hasPreview(fieldKey: string): boolean {
+    return !!this.filePreviews[fieldKey];
+  }
+
+  // Lấy preview
+  getPreview(fieldKey: string): any {
+    return this.filePreviews[fieldKey];
   }
 }

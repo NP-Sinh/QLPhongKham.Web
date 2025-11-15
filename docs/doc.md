@@ -36,6 +36,7 @@ modalFields = [
     ],
   },
   { key: 'diaChi', label: 'Địa Chỉ', type: 'textarea', colspan: 12 },
+  { key: 'anhDaiDien', label: 'Ảnh Đại Diện', type: 'file', accept: 'image/*', colspan: 12 }
 ];
 ```
 
@@ -72,6 +73,7 @@ modalFields = [
 
   { key: 'diaChi', label: 'Địa Chỉ', type: 'textarea', colspan: 12, rows: 2 },
   { key: 'ghiChu', label: 'Ghi Chú', type: 'textarea', colspan: 12, rows: 3 },
+  { key: 'taiLieu', label: 'Tài Liệu', type: 'file', accept: '.pdf,.doc,.docx', required: true, colspan: 12 }
 ];
 ```
 
