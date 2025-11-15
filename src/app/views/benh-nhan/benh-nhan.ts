@@ -76,6 +76,7 @@ export class BenhNhan {
         key: 'gioiTinh',
         label: 'Giới Tính',
         type: 'select',
+        required: true,
         colspan: 4,
         options: [
           { value: 'Nam', label: 'Nam' },
@@ -100,6 +101,7 @@ export class BenhNhan {
         key: 'nhomMau',
         label: 'Nhóm máu',
         type: 'select',
+        required: false,
         colspan: 4,
         options: [
           { value: 'O+', label: 'O+' },
@@ -130,6 +132,7 @@ export class BenhNhan {
         key: 'diaChi',
         label: 'Địa chỉ',
         type: 'text',
+        required: true,
         colspan: 8
       },
     ];
