@@ -20,7 +20,7 @@ export interface FormField {
   selector: 'app-form-modal',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './form-modal.html' ,
+  templateUrl: './form-modal.html',
   styleUrl: './form-modal.css',
 })
 export class FormModal {
@@ -63,10 +63,14 @@ export class FormModal {
 
   getModalSizeClass(): string {
     switch (this.modalSize) {
-      case 'sm': return 'modal-sm';
-      case 'lg': return 'modal-lg';
-      case 'xl': return 'modal-xl';
-      default: return '';
+      case 'sm':
+        return 'modal-sm';
+      case 'lg':
+        return 'modal-lg';
+      case 'xl':
+        return 'modal-xl';
+      default:
+        return '';
     }
   }
   // Xử lý file upload
@@ -82,7 +86,7 @@ export class FormModal {
           this.filePreviews[fieldKey] = {
             type: 'image',
             url: e.target.result,
-            name: file.name
+            name: file.name,
           };
         };
         reader.readAsDataURL(file);
@@ -90,12 +94,12 @@ export class FormModal {
         this.filePreviews[fieldKey] = {
           type: 'file',
           name: file.name,
-          size: this.formatFileSize(file.size)
+          size: this.formatFileSize(file.size),
         };
       }
     }
   }
-   removeFile(fieldKey: string) {
+  removeFile(fieldKey: string) {
     this.formData[fieldKey] = null;
     delete this.filePreviews[fieldKey];
   }
@@ -105,7 +109,7 @@ export class FormModal {
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
   }
   // Kiểm tra có preview không
   hasPreview(fieldKey: string): boolean {
@@ -118,9 +122,19 @@ export class FormModal {
   }
 
   // DATE INPUT (dd/MM/yyyy)
+  private lastDateValue: { [key: string]: string } = {};
   onDateInput(event: any, fieldKey: string) {
-    let value = event.target.value;
-    value = value.replace(/\D/g, '');
+    const currentValue = event.target.value;
+    const lastValue = this.lastDateValue[fieldKey] || '';
+
+    if (currentValue.length < lastValue.length) {
+      this.lastDateValue[fieldKey] = currentValue;
+      this.formData[fieldKey] = currentValue;
+      return;
+    }
+
+    let value = currentValue.replace(/\D/g, '');
+
     if (value.length >= 2) {
       value = value.substring(0, 2) + '/' + value.substring(2);
     }
@@ -133,6 +147,7 @@ export class FormModal {
 
     event.target.value = value;
     this.formData[fieldKey] = value;
+    this.lastDateValue[fieldKey] = value;
   }
 
   onDateBlur(event: any, fieldKey: string) {

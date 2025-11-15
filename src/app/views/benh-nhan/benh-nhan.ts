@@ -149,7 +149,8 @@ export class BenhNhan {
     this.benhnhanService.getBenhNhanId(id).subscribe({
       next: (benhNhan) => {
         this.formData = {
-          ...benhNhan
+          ...benhNhan,
+          ngaySinh: convertToVNDate(benhNhan.ngaySinh),
         };
         this.isModalOpen = true;
       },
@@ -209,17 +210,11 @@ export class BenhNhan {
   submitForm(data: any) {
     this.isSaving = true;
     this.errorMessage = '';
-
-    let ngaySinhISO = data.ngaySinh;
-    if (ngaySinhISO.includes('/')) {
-      ngaySinhISO = convertVNDateToISO(ngaySinhISO);
-    }
-
     const benhNhan = {
       id: data.id,
       maBenhNhan: data.maBenhNhan || '',
       hoTen: data.hoTen,
-      ngaySinh: ngaySinhISO,
+      ngaySinh: convertVNDateToISO(data.ngaySinh),
       gioiTinh: data.gioiTinh,
       soDienThoai: data.soDienThoai,
       diaChi: data.diaChi,
