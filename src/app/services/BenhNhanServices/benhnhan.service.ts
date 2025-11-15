@@ -14,4 +14,10 @@ export class BenhnhanService {
   getBenhNhan(): Observable<BenhNhanModel[]> {
     return this.http.get<BenhNhanModel[]>(`${this.apiUrl}/GetBenhNhan`);
   }
+  getBenhNhanId(id: number): Observable<BenhNhanModel>{
+    return this.http.get<BenhNhanModel>(`${this.apiUrl}/GetBenhNhanById/${id}`);
+  }
+  modifyBenhNhan(benhNhanModel: BenhNhanModel): Observable<BenhNhanModel>{
+    return this.http.post<BenhNhanModel>(`${this.apiUrl}/Modify`, benhNhanModel);
+  }
 }

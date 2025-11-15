@@ -116,4 +116,61 @@ export class FormModal {
   getPreview(fieldKey: string): any {
     return this.filePreviews[fieldKey];
   }
+
+  // DATE INPUT (dd/MM/yyyy)
+  onDateInput(event: any, fieldKey: string) {
+    let value = event.target.value;
+    value = value.replace(/\D/g, '');
+    if (value.length >= 2) {
+      value = value.substring(0, 2) + '/' + value.substring(2);
+    }
+    if (value.length >= 5) {
+      value = value.substring(0, 5) + '/' + value.substring(5);
+    }
+    if (value.length > 10) {
+      value = value.substring(0, 10);
+    }
+
+    event.target.value = value;
+    this.formData[fieldKey] = value;
+  }
+
+  onDateBlur(event: any, fieldKey: string) {
+    const value = event.target.value;
+    if (!value || value === '') return;
+    const parts = value.split('/');
+    if (parts.length === 3) {
+      let day = parts[0].padStart(2, '0');
+      let month = parts[1].padStart(2, '0');
+      let year = parts[2];
+      const dayNum = parseInt(day);
+      const monthNum = parseInt(month);
+      const yearNum = parseInt(year);
+
+      if (dayNum < 1 || dayNum > 31) {
+        this.formData[fieldKey] = '';
+        event.target.value = '';
+        return;
+      }
+
+      if (monthNum < 1 || monthNum > 12) {
+        this.formData[fieldKey] = '';
+        event.target.value = '';
+        return;
+      }
+
+      if (year.length === 2) {
+        year = yearNum <= 50 ? '20' + year : '19' + year;
+      }
+
+      if (year.length !== 4) {
+        this.formData[fieldKey] = '';
+        event.target.value = '';
+        return;
+      }
+      const formatted = `${day}/${month}/${year}`;
+      this.formData[fieldKey] = formatted;
+      event.target.value = formatted;
+    }
+  }
 }

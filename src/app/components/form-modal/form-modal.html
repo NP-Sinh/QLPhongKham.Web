@@ -19,9 +19,9 @@
                 <span *ngIf="field.required" class="text-danger">*</span>
               </label>
 
-              <!-- Text/Number/Email/Date/Password Input -->
+              <!-- Text/Number/Email/Password Input -->
               <input
-                *ngIf="['text', 'number', 'email', 'datetime', 'date', 'password'].includes(field.type)"
+                *ngIf="['text', 'number', 'email', 'password'].includes(field.type)"
                 [type]="field.type"
                 class="form-control"
                 [id]="field.key"
@@ -30,6 +30,21 @@
                 [required]="field.required ?? false"
                 [disabled]="field.disabled || isSaving"
                 [placeholder]="field.placeholder || ''" />
+
+                <!-- Date Input (dd/MM/yyyy) -->
+              <input
+                *ngIf="field.type === 'datetime'"
+                type="text"
+                class="form-control"
+                [id]="field.key"
+                [name]="field.key"
+                [(ngModel)]="formData[field.key]"
+                [required]="field.required ?? false"
+                [disabled]="field.disabled || isSaving"
+                [placeholder]="field.placeholder || 'dd/MM/yyyy'"
+                maxlength="10"
+                (input)="onDateInput($event, field.key)"
+                (blur)="onDateBlur($event, field.key)" />
 
               <!-- Textarea -->
               <textarea
@@ -43,7 +58,7 @@
                 [placeholder]="field.placeholder || ''"
                 [rows]="field.rows || 3">
               </textarea>
-              
+
               <!-- File Input -->
               <div *ngIf="field.type === 'file'">
                 <input
