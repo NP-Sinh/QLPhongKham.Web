@@ -32,7 +32,7 @@ export class FormModal {
   @Input() isSaving = false;
   @Input() errorMessage = '';
   @Input() columns: number = 1;
-  @Input() modalSize: 'sm' | 'md' | 'lg' | 'xl' = 'md';
+  @Input() modalSize!: 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
 
   @Output() closeModal = new EventEmitter<void>();
   @Output() submitForm = new EventEmitter<any>();
@@ -69,6 +69,8 @@ export class FormModal {
         return 'modal-lg';
       case 'xl':
         return 'modal-xl';
+      case 'fullscreen':
+        return 'modal-fullscreen';
       default:
         return '';
     }
