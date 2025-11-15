@@ -151,19 +151,7 @@ export class VaiTroList {
       this.loadVaiTros();
       this.toast?.showToast('Lưu thành công!', 'success');
     } catch (error: any) {
-      if (error?.error?.errors) {
-        const errors = error.error.errors;
-        const errorMessages = Object.keys(errors)
-          .map(key => errors[key].join(', '))
-          .join('\n');
-        this.errorMessage = errorMessages;
-      } else if (error?.error?.title) {
-        this.errorMessage = error.error.title;
-      } else if (error?.message) {
-        this.errorMessage = error.message;
-      } else {
-        this.errorMessage = 'Đã xảy ra lỗi khi lưu dữ liệu. Vui lòng thử lại.';
-      }
+      this.errorMessage = 'Đã xảy ra lỗi khi lưu dữ liệu.' + error;
     } finally {
       this.isSaving = false;
       this.cdr.detectChanges();
