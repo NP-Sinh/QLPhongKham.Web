@@ -8,6 +8,7 @@ export interface FormField {
   type: 'text' | 'number' | 'email' | 'select' | 'textarea' | 'datetime' | 'password' | 'file';
   required?: boolean;
   disabled?: boolean;
+  hidden?: boolean;
   options?: { value: any; label: string }[];
   placeholder?: string;
   colspan?: number;

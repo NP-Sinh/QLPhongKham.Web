@@ -49,6 +49,7 @@ export class BenhNhan {
         label: 'ID',
         type: 'number',
         disabled: true,
+        colspan: 2
       },
       {
         key: 'maBenhNhan',
@@ -56,6 +57,7 @@ export class BenhNhan {
         type: 'text',
         disabled: true,
         placeholder: 'Tự động tạo',
+        colspan: 2
       },
       {
         key: 'hoTen',
@@ -122,6 +124,7 @@ export class BenhNhan {
         label: 'Ngày tạo',
         type: 'datetime',
         disabled: true,
+        hidden:true
       },
       {
         key: 'diaChi',
