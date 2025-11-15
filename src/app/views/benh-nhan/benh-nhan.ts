@@ -88,11 +88,6 @@ export class BenhNhan {
         placeholder: 'Nhập số điện thoại',
       },
       {
-        key: 'diaChi',
-        label: 'Địa chỉ',
-        type: 'text',
-      },
-      {
         key: 'cmnd',
         label: 'Chứng minh nhân dân',
         type: 'number',
@@ -127,6 +122,12 @@ export class BenhNhan {
         label: 'Ngày tạo',
         type: 'datetime',
         disabled: true,
+      },
+      {
+        key: 'diaChi',
+        label: 'Địa chỉ',
+        type: 'text',
+        colspan: 8
       },
     ];
   }
