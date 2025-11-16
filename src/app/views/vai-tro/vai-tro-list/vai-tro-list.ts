@@ -84,6 +84,7 @@ export class VaiTroList {
       next: (vaiTro) => {
         this.formData = { ...vaiTro };
         this.isModalOpen = true;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.errorMessage = 'Không thể tải thông tin vai trò.';

@@ -160,6 +160,7 @@ export class BenhNhan {
           ngaySinh: convertToVNDate(benhNhan.ngaySinh),
         };
         this.isModalOpen = true;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.errorMessage = 'Không thể tải thông tin bệnh nhân';
