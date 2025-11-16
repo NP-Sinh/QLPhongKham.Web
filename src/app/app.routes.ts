@@ -4,6 +4,7 @@ import { MainLayout } from './shared/main-layout/main-layout';
 import { Login } from './views/login/login';
 import { BenhNhan } from './views/benh-nhan/benh-nhan';
 import { Home } from './views/home/home';
+import { ChuyenKhoa } from './views/chuyen-khoa/chuyen-khoa';
 
 export const routes: Routes = [
   // {
@@ -31,6 +32,10 @@ export const routes: Routes = [
       {
         path: 'benh-nhan',
         component: BenhNhan,
+      },
+      {
+        path: 'chuyen-khoa',
+        component: ChuyenKhoa,
       },
 
       {
