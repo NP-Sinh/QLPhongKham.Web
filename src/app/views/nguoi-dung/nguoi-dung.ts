@@ -205,12 +205,19 @@ export class NguoiDung {
     this.errorMessage = "",
     this.isModalOpen = true
   }
+
    // edit
   editModal(id: number) {
     this.isEditMode = true;
     this.modalTitle = 'Chỉnh Sửa người dùng';
     this.errorMessage = '';
-    this.loadVaiTroOptions();
+
+    const ngayTaoField = this.modalFields.find(f => f.key === 'ngayTao');
+    if (ngayTaoField) {
+      ngayTaoField.hidden = !this.isEditMode;
+      this.cdr.detectChanges();
+    }
+
     this.getNguoiDungId(id);
   }
 
