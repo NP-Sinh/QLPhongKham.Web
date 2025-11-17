@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LoadingOverlay } from '../../components/loading-overlay/loading-overlay';
 import { FormField, FormModal } from '../../components/form-modal/form-modal';
 import { ToastNotification } from '../../components/toast-notification/toast-notification';
-import { catchError, map, Observable, of, startWith } from 'rxjs';
+import { catchError, map, Observable, of, shareReplay, startWith } from 'rxjs';
 import { NguoidungService } from '../../services/NguoiDungServices/nguoidung.service';
 import { convertToVNDate, getTodayISO } from '../../utils/utils';
 import { flush } from '@angular/core/testing';
@@ -23,6 +23,7 @@ interface NguoiDungState {
 })
 export class NguoiDung {
   public state$!: Observable<NguoiDungState>;
+  public vaiTroOptions$ !: Observable<{value: string, label: string}[]>;
 
   // Modal state
   isModalOpen = false;
@@ -95,9 +96,7 @@ export class NguoiDung {
         type: 'select',
         required: false,
         colspan: 4,
-        options: [
-          { value: '', label: '' },
-        ],
+        options: [],
       },
       {
         key: 'dangHoatDong',
@@ -120,26 +119,33 @@ export class NguoiDung {
     ];
   }
 
+
   // select vai trò
   loadVaiTroOptions() {
-    this.vaiTroService.getVaiTros().subscribe({
-      next: (vaiTros) => {
+    this.vaiTroOptions$ = this.vaiTroService.getVaiTros().pipe(
+      map(vaiTros => [
+        ...vaiTros.map(vt => ({
+          value: vt.id.toString(),
+          label: vt.tenVaiTro
+        }))
+      ]),
+      startWith([{ value: '', label: 'Đang tải...' }]),
+      catchError(() => {
+        return of([{ value: '', label: 'Lỗi tải dữ liệu' }]);
+      })
+    );
+    this.vaiTroOptions$.subscribe({
+      next: (options) => {
         const vaiTroField = this.modalFields.find(f => f.key === 'idVaiTro');
         if (vaiTroField) {
-          vaiTroField.options = [
-            ...vaiTros.map(vt => ({
-              value: vt.id.toString(),
-              label: vt.tenVaiTro
-            }))
-          ];
+          vaiTroField.options = options;
           this.cdr.detectChanges();
         }
-      },
-      error: () => {
-        this.errorMessage = "Xảy ra lỗi!";
       }
     });
   }
+
+
 
   closeModal() {
     this.isModalOpen = false;
@@ -161,7 +167,7 @@ export class NguoiDung {
       next: (nguoidung) => {
         this.formData = {
           ...nguoidung,
-          idVaiTro:  nguoidung.vaiTro!.id.toString(),
+          idVaiTro:  nguoidung.vaiTro?.id?.toString(),
         };
         this.isModalOpen = true;
         this.cdr.detectChanges();
