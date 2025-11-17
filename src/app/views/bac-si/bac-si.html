@@ -38,7 +38,7 @@
           <td>{{bs.hoTen}}</td>
           <td>{{bs.ngaySinh | date:'dd/MM/yyyy'}}</td>
           <td>{{bs.gioiTinh}}</td>
-          <td>{{ bs.tenChuyenKhoa }}</td>
+          <td>{{ bs.chuyenKhoa?.tenChuyenKhoa }}</td>
           <td>{{bs.soDienThoai}}</td>
           <td>
             <button class="btn btn-sm btn-warning me-2" (click)="editModal(bs.id)">

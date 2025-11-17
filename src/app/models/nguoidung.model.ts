@@ -14,5 +14,4 @@ export interface NguoiDungModel {
     tenVaiTro: string;
   };
   idVaiTro?: number;
-  tenVaiTro?: string
 }
