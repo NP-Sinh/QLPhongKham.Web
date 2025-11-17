@@ -7,8 +7,6 @@ export interface BacSiModel{
   soDienThoai: string,
   bangCap: string,
   dangHoatDong: boolean,
-  idChuyenKhoa?: number,
-  idNguoiDung?: number,
   chuyenKhoa?: {
     id: number,
     maChuyenKhoa: string,
