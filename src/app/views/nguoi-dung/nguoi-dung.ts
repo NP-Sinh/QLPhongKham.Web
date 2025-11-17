@@ -167,7 +167,7 @@ export class NguoiDung {
       next: (nguoidung) => {
         this.formData = {
           ...nguoidung,
-          idVaiTro:  nguoidung.vaiTro?.id?.toString(),
+          idVaiTro:  nguoidung.vaiTro?.id?.toString() || '',
         };
         this.isModalOpen = true;
         this.cdr.detectChanges();

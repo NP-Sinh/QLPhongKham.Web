@@ -21,6 +21,7 @@
         <tr>
           <th  scope="col">Mã người dùng</th>
           <th  scope="col">Họ tên</th>
+          <th  scope="col">Vai trò</th>
           <th  scope="col">Thao tác</th>
         </tr>
       </thead>
@@ -28,6 +29,7 @@
         <tr *ngFor="let nguoidung of danhSachNguoiDung">
           <td>{{nguoidung.maNguoiDung}}</td>
            <td>{{nguoidung.hoTen}}</td>
+            <td>{{nguoidung.tenVaiTro}}</td>
           <td>
             <button class="btn btn-sm btn-warning me-2" (click)="editModal(nguoidung.id)">
               <i class="bi bi-pencil"></i> Sửa
