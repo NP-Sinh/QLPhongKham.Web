@@ -6,6 +6,7 @@ import { BenhNhan } from './views/benh-nhan/benh-nhan';
 import { Home } from './views/home/home';
 import { ChuyenKhoa } from './views/chuyen-khoa/chuyen-khoa';
 import { NguoiDung } from './views/nguoi-dung/nguoi-dung';
+import { BacSi } from './views/bac-si/bac-si';
 
 export const routes: Routes = [
   // {
@@ -41,6 +42,10 @@ export const routes: Routes = [
       {
         path: 'nguoi-dung',
         component: NguoiDung,
+      },
+      {
+        path: "bac-si",
+        component: BacSi
       },
 
       {

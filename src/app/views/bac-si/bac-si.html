@@ -1,0 +1,68 @@
+<ng-container *ngIf="state$ | async as state">
+
+  <app-loading-overlay [isLoading]="state.loading"></app-loading-overlay>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Bác sĩ</h1>
+    <button class="btn btn-primary" (click)="addModal()">
+      <i class="bi bi-plus-circle"></i> Thêm bác sĩ
+    </button>
+  </div>
+
+
+  <div *ngIf="state.error" class="alert alert-danger" role="alert">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    Đã xảy ra lỗi: Không thể tải danh sách bác sĩ.
+  </div>
+
+  <div *ngIf="state.data as danhSachBacSi">
+
+    <div *ngIf="danhSachBacSi.length === 0" class="alert alert-info" role="alert">
+      <i class="bi bi-info-circle"></i> Không tìm thấy bác sĩ nào.
+    </div>
+
+    <table *ngIf="danhSachBacSi.length > 0" class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Mã bác sĩ</th>
+          <th>Họ Tên</th>
+          <th>Ngày Sinh</th>
+          <th>Giới Tính</th>
+          <th>Chuyên khoa</th>
+          <th>Số Điện Thoại</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bs of danhSachBacSi">
+          <td>{{bs.maBacSi}}</td>
+          <td>{{bs.hoTen}}</td>
+          <td>{{bs.ngaySinh | date:'dd/MM/yyyy'}}</td>
+          <td>{{bs.gioiTinh}}</td>
+          <td>{{ bs.chuyenKhoa?.tenChuyenKhoa }}</td>
+          <td>{{bs.soDienThoai}}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2" (click)="editModal(bs.id)">
+              <i class="bi bi-pencil"></i> Sửa
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+ <!-- Modal -->
+  <app-form-modal
+    [columns]="3"
+    [modalSize]="'xl'"
+    [isOpen]="isModalOpen"
+    [title]="modalTitle"
+    [fields]="modalFields"
+    [formData]="formData"
+    [isSaving]="isSaving"
+    [errorMessage]="errorMessage"
+    [submitButtonText]="isEditMode ? 'Cập Nhật' : 'Thêm Mới'"
+    (closeModal)="closeModal()" (submitForm)="submitForm($event)">
+  </app-form-modal>
+
+  <!-- Toast Notification -->
+  <app-toast-notification></app-toast-notification>
+</ng-container>
