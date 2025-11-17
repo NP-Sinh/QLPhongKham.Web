@@ -23,7 +23,7 @@ interface NguoiDungState {
 })
 export class NguoiDung {
   public state$!: Observable<NguoiDungState>;
-  public vaiTroOptions$ !: Observable<{value: string, label: string}[]>;
+  public vaiTroOptions$!: Observable<{ value: string; label: string }[]>;
 
   // Modal state
   isModalOpen = false;
@@ -36,7 +36,11 @@ export class NguoiDung {
 
   @ViewChild(ToastNotification) toast!: ToastNotification;
 
-  constructor(private nguoidungService: NguoidungService, private vaiTroService: VaiTroService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private nguoidungService: NguoidungService,
+    private vaiTroService: VaiTroService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.getNguoiDung();
@@ -105,7 +109,7 @@ export class NguoiDung {
         required: false,
         colspan: 4,
         options: [
-          { value: 'true', label: 'Hoạt động'},
+          { value: 'true', label: 'Hoạt động' },
           { value: 'false', label: 'Không hoạt động' },
         ],
       },
@@ -114,20 +118,19 @@ export class NguoiDung {
         label: 'Ngày tạo',
         type: 'datetime',
         disabled: true,
-        hidden: true
+        hidden: true,
       },
     ];
   }
 
-
   // select vai trò
   loadVaiTroOptions() {
     this.vaiTroOptions$ = this.vaiTroService.getVaiTros().pipe(
-      map(vaiTros => [
-        ...vaiTros.map(vt => ({
+      map((vaiTros) => [
+        ...vaiTros.map((vt) => ({
           value: vt.id.toString(),
-          label: vt.tenVaiTro
-        }))
+          label: vt.tenVaiTro,
+        })),
       ]),
       startWith([{ value: '', label: 'Đang tải...' }]),
       catchError(() => {
@@ -136,16 +139,14 @@ export class NguoiDung {
     );
     this.vaiTroOptions$.subscribe({
       next: (options) => {
-        const vaiTroField = this.modalFields.find(f => f.key === 'idVaiTro');
+        const vaiTroField = this.modalFields.find((f) => f.key === 'idVaiTro');
         if (vaiTroField) {
           vaiTroField.options = options;
           this.cdr.detectChanges();
         }
-      }
+      },
     });
   }
-
-
 
   closeModal() {
     this.isModalOpen = false;
@@ -167,58 +168,58 @@ export class NguoiDung {
       next: (nguoidung) => {
         this.formData = {
           ...nguoidung,
-          idVaiTro:  nguoidung.vaiTro?.id?.toString() || '',
+          idVaiTro: nguoidung.vaiTro?.id?.toString() || '',
         };
         this.isModalOpen = true;
         this.cdr.detectChanges();
       },
       error: () => {
-        this.errorMessage = "Không tải được thông tin";
-      }
+        this.errorMessage = 'Không tải được thông tin';
+      },
     });
   }
 
-  modifyNguoiDung(nguoidung: any){
+  modifyNguoiDung(nguoidung: any) {
     this.nguoidungService.modifyNguoiDung(nguoidung).subscribe({
-      next: () =>{
-        this.toast?.showToast("Lưu thành công","success");
+      next: () => {
+        this.toast?.showToast('Lưu thành công', 'success');
         this.closeModal();
         this.getNguoiDung();
       },
       error: () => {
-        this.errorMessage = "Đã xảy ra lỗi";
+        this.errorMessage = 'Đã xảy ra lỗi';
         this.isSaving = false;
         this.cdr.detectChanges();
-      }
+      },
     });
   }
   // add
-  addModal(){
+  addModal() {
     this.isEditMode = false;
-    this.modalTitle = "Thêm người dùng";
-    this.formData = {
+    this.modalTitle = 'Thêm người dùng';
+    (this.formData = {
       id: 0,
-      maNguoiDung: "",
-      tenDangNhap: "",
-      matKhau: "",
-      hoTen: "",
-      soDienThoai: "",
-      email: "",
-      idVaiTro: "",
-      dangHoatDong: "",
+      maNguoiDung: '',
+      tenDangNhap: '',
+      matKhau: '',
+      hoTen: '',
+      soDienThoai: '',
+      email: '',
+      idVaiTro: '',
+      dangHoatDong: '',
       ngayTao: getTodayISO(),
-    },
-    this.errorMessage = "",
-    this.isModalOpen = true
+    }),
+      (this.errorMessage = ''),
+      (this.isModalOpen = true);
   }
 
-   // edit
+  // edit
   editModal(id: number) {
     this.isEditMode = true;
     this.modalTitle = 'Chỉnh Sửa người dùng';
     this.errorMessage = '';
 
-    const ngayTaoField = this.modalFields.find(f => f.key === 'ngayTao');
+    const ngayTaoField = this.modalFields.find((f) => f.key === 'ngayTao');
     if (ngayTaoField) {
       ngayTaoField.hidden = !this.isEditMode;
       this.cdr.detectChanges();
@@ -242,7 +243,6 @@ export class NguoiDung {
       idVaiTro: data.idVaiTro,
       dangHoatDong: data.dangHoatDong === 'true',
       ngayTao: data.ngayTao || getTodayISO(),
-
     };
     this.modifyNguoiDung(nguoidung);
   }
