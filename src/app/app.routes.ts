@@ -5,6 +5,7 @@ import { Login } from './views/login/login';
 import { BenhNhan } from './views/benh-nhan/benh-nhan';
 import { Home } from './views/home/home';
 import { ChuyenKhoa } from './views/chuyen-khoa/chuyen-khoa';
+import { NguoiDung } from './views/nguoi-dung/nguoi-dung';
 
 export const routes: Routes = [
   // {
@@ -36,6 +37,10 @@ export const routes: Routes = [
       {
         path: 'chuyen-khoa',
         component: ChuyenKhoa,
+      },
+      {
+        path: 'nguoi-dung',
+        component: NguoiDung,
       },
 
       {
