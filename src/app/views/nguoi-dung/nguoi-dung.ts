@@ -206,7 +206,7 @@ export class NguoiDung {
       soDienThoai: '',
       email: '',
       idVaiTro: '',
-      dangHoatDong: '',
+      dangHoatDong: 'true',
       ngayTao: getTodayISO(),
     }),
       (this.errorMessage = ''),
