@@ -1,0 +1,64 @@
+<ng-container *ngIf="state$ | async as state">
+
+  <app-loading-overlay [isLoading]="state.loading"></app-loading-overlay>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Phòng khám</h1>
+    <button class="btn btn-primary" (click)="addModal()">
+      <i class="bi bi-plus-circle"></i> Thêm phòng khám
+    </button>
+  </div>
+
+
+  <div *ngIf="state.error" class="alert alert-danger" role="alert">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    <strong>Đã xảy ra lỗi:</strong> Không thể tải danh sách phòng khám.
+  </div>
+
+  <div *ngIf="state.data as dsPhong">
+
+    <div *ngIf="dsPhong.length === 0" class="alert alert-info" role="alert">
+      <i class="bi bi-info-circle"></i> Không tìm thấy phòng nào.
+    </div>
+
+    <table *ngIf="dsPhong.length > 0" class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Mã phòng</th>
+          <th>Tên phòng</th>
+          <th>Loại phòng</th>
+          <th>Tầng</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pk of dsPhong">
+          <td>{{ pk.maPhong }}</td>
+          <td>{{ pk.tenPhong }}</td>
+          <td>{{ pk.loaiPhong }}</td>
+          <td>{{ pk.tang }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2" (click)="editModal(pk.id)">
+              <i class="bi bi-pencil"></i> Sửa
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+ <!-- Modal -->
+  <app-form-modal
+    [columns]="2"
+    [modalSize]="'lg'"
+    [isOpen]="isModalOpen"
+    [title]="modalTitle"
+    [fields]="modalFields"
+    [formData]="formData"
+    [isSaving]="isSaving"
+    [errorMessage]="errorMessage"
+    [submitButtonText]="isEditMode ? 'Cập Nhật' : 'Thêm Mới'"
+    (closeModal)="closeModal()" (submitForm)="submitForm($event)">
+  </app-form-modal>
+
+  <!-- Toast Notification -->
+  <app-toast-notification></app-toast-notification>
+</ng-container>

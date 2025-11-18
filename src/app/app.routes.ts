@@ -7,6 +7,7 @@ import { Home } from './views/home/home';
 import { ChuyenKhoa } from './views/chuyen-khoa/chuyen-khoa';
 import { NguoiDung } from './views/nguoi-dung/nguoi-dung';
 import { BacSi } from './views/bac-si/bac-si';
+import { PhongKham } from './views/phong-kham/phong-kham';
 
 export const routes: Routes = [
   // {
@@ -30,7 +31,10 @@ export const routes: Routes = [
         path: 'vai-tro',
         component: VaiTroList,
       },
-
+      {
+        path: 'phong-kham',
+        component: PhongKham,
+      },
       {
         path: 'benh-nhan',
         component: BenhNhan,
