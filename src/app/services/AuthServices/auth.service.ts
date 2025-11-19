@@ -10,23 +10,12 @@ interface LoginModel {
   tenDangNhap: string;
   matKhau: string;
   idVaiTro: number;
-}
-
-interface LoginResponse {
-  success: boolean;
-  message: string;
   token?: string;
   data?: {
     id: number;
     hoTen: string;
     role: string;
   };
-}
-
-interface UserInfo {
-  id: number;
-  hoTen: string;
-  role: string;
 }
 
 @Injectable({
@@ -39,26 +28,24 @@ export class AuthService {
   private platformId = inject(PLATFORM_ID);
   private isBrowser: boolean;
 
-  private currentUserSubject = new BehaviorSubject<UserInfo | null>(null);
+  private currentUserSubject = new BehaviorSubject<LoginModel | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
-  login(loginModel: LoginModel): Observable<LoginResponse> {
-    return this.http
-      .post<LoginResponse>(`${this.apiUrl}/Login`, loginModel)
-      .pipe(
-        tap((response) => {
-          if (response.success && response.token) {
-            this.saveToken(response.token);
-            if (response.data) {
-              this.saveUserInfo(response.data);
-            }
+  login(loginModel: LoginModel): Observable<LoginModel> {
+    return this.http.post<LoginModel>(`${this.apiUrl}/Login`, loginModel).pipe(
+      tap((response) => {
+        if (response.token) {
+          this.saveToken(response.token);
+          if (response.data) {
+            this.saveUserInfo(response);
           }
-        })
-      );
+        }
+      })
+    );
   }
 
   logout(): void {
@@ -83,17 +70,15 @@ export class AuthService {
     return null;
   }
 
-  saveUserInfo(user: UserInfo): void {
+  saveUserInfo(user: LoginModel): void {
     if (this.isBrowser) {
       localStorage.setItem(this.USER_KEY, JSON.stringify(user));
     }
     this.currentUserSubject.next(user);
   }
 
-  getUserInfo(): UserInfo | null {
-    if (!this.isBrowser) {
-      return null;
-    }
+  getUserInfo(): LoginModel | null {
+    if (!this.isBrowser) return null;
 
     const userJson = localStorage.getItem(this.USER_KEY);
     if (userJson) {
@@ -107,14 +92,11 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    if (!this.isBrowser) {
-      return false;
-    }
+    if (!this.isBrowser) return false;
 
     const token = this.getToken();
     if (!token) return false;
 
-    // Kiểm tra token có hết hạn không
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const expiry = payload.exp * 1000;
@@ -126,11 +108,12 @@ export class AuthService {
 
   hasRole(role: string): boolean {
     const user = this.getUserInfo();
-    return user?.role === role;
+    return user?.data?.role === role;
   }
 
   hasAnyRole(roles: string[]): boolean {
     const user = this.getUserInfo();
-    return user ? roles.includes(user.role) : false;
+    return user ? roles.includes(user.data?.role || '') : false;
   }
 }
+
