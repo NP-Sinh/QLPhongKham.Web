@@ -48,7 +48,7 @@ export class AuthService {
     );
   }
 
-  logout(): void {
+  logout() {
     if (this.isBrowser) {
       localStorage.removeItem(this.TOKEN_KEY);
       localStorage.removeItem(this.USER_KEY);
@@ -63,7 +63,7 @@ export class AuthService {
     }
   }
 
-  getToken(): string | null {
+  getToken() {
     if (this.isBrowser) {
       return localStorage.getItem(this.TOKEN_KEY);
     }
@@ -77,7 +77,7 @@ export class AuthService {
     this.currentUserSubject.next(user);
   }
 
-  getUserInfo(): LoginModel | null {
+  getUserInfo() {
     if (!this.isBrowser) return null;
 
     const userJson = localStorage.getItem(this.USER_KEY);
