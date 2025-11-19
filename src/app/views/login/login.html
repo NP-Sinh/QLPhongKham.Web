@@ -1,1 +1,67 @@
-<H1>Đây Là Login</H1>
+<div class="login-container">
+  <div class="login-card">
+    <h2>Đăng Nhập Hệ Thống</h2>
+
+    <!-- Hiển thị lỗi -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <!-- Tên đăng nhập -->
+      <div class="form-group">
+        <label for="tenDangNhap">Tên đăng nhập</label>
+        <input
+          type="text"
+          id="tenDangNhap"
+          name="tenDangNhap"
+          [(ngModel)]="tenDangNhap"
+          required
+          class="form-control"
+          placeholder="Nhập tên đăng nhập"
+        />
+      </div>
+
+      <!-- Mật khẩu -->
+      <div class="form-group">
+        <label for="matKhau">Mật khẩu</label>
+        <input
+          type="password"
+          id="matKhau"
+          name="matKhau"
+          [(ngModel)]="matKhau"
+          required
+          class="form-control"
+          placeholder="Nhập mật khẩu"
+        />
+      </div>
+
+      <!-- Vai trò -->
+      <div class="form-group">
+        <label for="idVaiTro">Vai trò</label>
+        <select
+          id="idVaiTro"
+          name="idVaiTro"
+          [(ngModel)]="idVaiTro"
+          required
+          class="form-control"
+        >
+          <option value="0" disabled>-- Chọn vai trò --</option>
+          <option *ngFor="let role of vaiTros" [value]="role.id">
+            {{ role.tenVaiTro }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Nút đăng nhập -->
+      <button
+        type="submit"
+        class="btn-login"
+        [disabled]="!loginForm.valid || isLoading"
+      >
+        <span *ngIf="!isLoading">Đăng Nhập</span>
+        <span *ngIf="isLoading">Đang xử lý...</span>
+      </button>
+    </form>
+  </div>
+</div>
