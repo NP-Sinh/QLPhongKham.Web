@@ -57,7 +57,7 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  saveToken(token: string): void {
+  saveToken(token: string){
     if (this.isBrowser) {
       localStorage.setItem(this.TOKEN_KEY, token);
     }
@@ -70,7 +70,7 @@ export class AuthService {
     return null;
   }
 
-  saveUserInfo(user: LoginModel): void {
+  saveUserInfo(user: LoginModel){
     if (this.isBrowser) {
       localStorage.setItem(this.USER_KEY, JSON.stringify(user));
     }
@@ -91,7 +91,7 @@ export class AuthService {
     return null;
   }
 
-  isLoggedIn(): boolean {
+  isLoggedIn() {
     if (!this.isBrowser) return false;
 
     const token = this.getToken();
@@ -106,12 +106,12 @@ export class AuthService {
     }
   }
 
-  hasRole(role: string): boolean {
+  hasRole(role: string) {
     const user = this.getUserInfo();
     return user?.data?.role === role;
   }
 
-  hasAnyRole(roles: string[]): boolean {
+  hasAnyRole(roles: string[]) {
     const user = this.getUserInfo();
     return user ? roles.includes(user.data?.role || '') : false;
   }
