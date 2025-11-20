@@ -20,10 +20,8 @@ export class Login implements OnInit {
   matKhau: string = '';
   idVaiTro: number = 0;
   vaiTros: VaiTroModel[] = [];
-  errorMessage: string = '';
-  isLoading: boolean = false;
 
-  @ViewChild(ToastNotification) toast!: ToastNotification;
+    @ViewChild(ToastNotification) toast!: ToastNotification;
 
   constructor(
     private authService: AuthService,
@@ -44,19 +42,11 @@ export class Login implements OnInit {
         this.vaiTros = roles;
       },
       error: (err) => {
-        this.errorMessage = 'Không thể tải danh sách vai trò';
+        console.log("Lỗi", err);
       },
     });
   }
   onSubmit() {
-    if (!this.tenDangNhap || !this.matKhau || !this.idVaiTro) {
-      this.errorMessage = 'Vui lòng điền đầy đủ thông tin';
-      return;
-    }
-
-    this.isLoading = true;
-    this.errorMessage = '';
-
     const loginModel = {
       tenDangNhap: this.tenDangNhap,
       matKhau: this.matKhau,
@@ -72,14 +62,12 @@ export class Login implements OnInit {
           // Chuyển hướng đến trang home
           this.router.navigate(['/home']);
         } else {
-          this.errorMessage = response.message || 'Đăng nhập thất bại';
+          this.toast.showToast('Đăng nhập thất bại', 'error');
         }
-        this.isLoading = false;
       },
       error: (err) => {
-        this.errorMessage =
-          err.error?.message || 'Đã xảy ra lỗi khi đăng nhập';
-        this.isLoading = false;
+        console.log("Lỗi", err);
+        this.toast.showToast('Đăng nhập thất bại', 'error');
       },
     });
   }

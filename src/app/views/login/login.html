@@ -1,12 +1,6 @@
 <div class="login-container">
   <div class="login-card">
     <h2>Đăng Nhập Hệ Thống</h2>
-
-    <!-- Hiển thị lỗi -->
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
-
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <!-- Tên đăng nhập -->
       <div class="form-group">
@@ -57,11 +51,11 @@
       <button
         type="submit"
         class="btn-login"
-        [disabled]="!loginForm.valid || isLoading"
+        [disabled]="!loginForm.valid"
       >
-        <span *ngIf="!isLoading">Đăng Nhập</span>
-        <span *ngIf="isLoading">Đang xử lý...</span>
+        Đăng Nhập
       </button>
     </form>
   </div>
 </div>
+<app-toast-notification></app-toast-notification>
